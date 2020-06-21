@@ -1,3 +1,3 @@
-const bookmakerName = 'williamhill';
+const bookmakerName = 'willhill';
 
 export default bookmakerName;
