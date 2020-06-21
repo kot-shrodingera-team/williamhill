@@ -3,84 +3,56 @@ import { setStakeSum } from '../callbacks/setStakeSum';
 import { getBalance } from '../initialization/balance';
 
 export function getMinStake(): number {
-  return 1;
+  return 0.04;
 }
 
 export function getMaxStake(): number {
-  const maxBetErrorMessage = document.querySelector(
-    '.sbk-betslip-bet__messages--error a'
-  );
-  if (maxBetErrorMessage) {
-    log('Берем max из сообщения об ошибке в купоне');
-    return Number(maxBetErrorMessage.textContent.slice(1));
-  }
-
-  return Number(getBalance());
+  return getBalance();
 }
+
 export function clearCoupon(): void {
-  const clearButton = document.querySelector(
-    '.button.button--cancel.clear-all-bets'
-  ) as HTMLButtonElement;
-  if (clearButton) {
-    clearButton.click();
-  }
-}
-
-export function checkStakeLoad(): boolean {
-  return Boolean(document.querySelector('.sbk-betslip-single__content'));
-}
-
-export function checkMarketLoad(): boolean {
-  return Boolean(document.querySelector('.grid.cards'));
+  (document.querySelector('.slipTitle_details a') as HTMLDivElement).click();
 }
 
 export function getStakeCount(): number {
-  log(`Получен ${getStakeCount.name}`);
-  return document.querySelectorAll('.sbk-betslip-single__content').length;
+  return document.querySelectorAll('.singleBet').length;
 }
 
 export function getSumFromStake(): number {
-  const input = document.querySelector(
-    '.input-text-wrapper input'
-  ) as HTMLInputElement;
+  const input = document.querySelector('.slipStake input') as HTMLInputElement;
   if (input) {
     log('Получили сумму из купона');
     return Number(input.value);
   }
-  log(`Инпут не найден ${getSumFromStake.name}`);
+  log(`Инпут не найден getSumFromStake`);
   return 0;
 }
+
 export function getCoefFromCoupon(): number {
-  const coef = document.querySelector('.odds__value.odds__value--original');
+  const coef = document.querySelector('.slipName span');
   if (!coef) {
     log('Ошибка парсинга коэффициента, коэффициент не найден.');
-    return 0;
+    return NaN;
   }
   if (isNaN(Number(coef.textContent))) {
     log(`Коэффициент не удалось распарсить в число: ${coef.textContent}`);
-    return 0;
+    return NaN;
   }
   return Number(coef.textContent);
 }
 
 export function getParametrFromCoupon(): number {
-  if (document.querySelector('.sbk-betslip-single__content')) {
-    const handicap = document.querySelector('.handicap__value');
-    if (handicap) {
-      log('Параметр найден.');
-      return parseFloat(handicap.textContent.substr(1));
-    }
-    const handicap1 = document.querySelector('.single-info__selection__name');
-    if (handicap1) {
-      log('Обычный параметр не найден ищем в названии.');
-      const param = parseFloat(handicap1.textContent.split('(')[1]);
-      // eslint-disable-next-line no-restricted-globals
-      if (isNaN(param)) return -6666;
-      return param;
-    }
+  const regexPattern = new RegExp(
+    String.raw`^.*\s+\(?([-+]?\d+(?:\.\d+)?)\)?\s+@`
+  );
+  const name = document.querySelector('.slipName').textContent;
+  const regexMatch = name.match(regexPattern);
+  if (regexMatch) {
+    log('Нашли параметр');
+    return Number(regexMatch[1]);
   }
-  log('Купон для получения параметра не найден.');
-  return NaN;
+  log('Параметр -6666');
+  return -6666;
 }
 
 export function checkIsEnabled(): boolean {

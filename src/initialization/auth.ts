@@ -1,21 +1,12 @@
-import { log } from '../logger';
-
-export function auth(logn: string, pass: string): boolean {
-  const login = document.querySelector('#ssc-liu') as HTMLInputElement;
-  const password = document.querySelector('#ssc-lipw') as HTMLInputElement;
-  const button = document.querySelector('#ssc-lis') as HTMLDivElement;
-  login.value = logn;
+export function auth(login: string, pass: string) {
+  const userName = document.querySelector('#username') as HTMLInputElement;
+  const password = document.querySelector('#password') as HTMLInputElement;
+  const logInBtn = document.querySelector('#signInBtn') as HTMLDivElement;
+  userName.value = login;
   password.value = pass;
-  if (button) {
-    button.click();
-    log('Кнопка при авторизации нажата.');
-    return true;
-  } else {
-    log('Кнопка при авторизации не найдена.');
-    return false;
-  }
+  logInBtn.click();
 }
 
 export function checkAuth(): boolean {
-  return Boolean(document.querySelector('.ssc-un'));
+  return Boolean(document.querySelector('.userHighlight'));
 }
