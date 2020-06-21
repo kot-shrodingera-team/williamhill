@@ -1,30 +1,17 @@
 import { log } from '../logger';
+import { updateBalance } from '../initialization';
 
 export function checkStakeStatus(): boolean {
-  const message = document.querySelector('.success-info__message');
-  const error = document.querySelector('.error__message-container');
-  const errorMessageClose = document.querySelector('.sbk-betslip-bet__locked');
-  const errorMessage = document.querySelector('.error__message');
+  const error0 = document.querySelector('#slipError0');
+  const slipFooterReturn = document.querySelector('.slipFooter.return');
+  if (error0) {
+    log('Ошибка проставки ');
 
-  if (errorMessageClose) {
-    log('Ставка закрылась!');
     return false;
   }
-
-  if (message) {
-    log('Ставка сделана!');
+  if (slipFooterReturn) {
+    log('Ставка успешная');
+    updateBalance();
     return true;
   }
-
-  if (error) {
-    log('Ошибка загрузки купона');
-    return false;
-  }
-
-  if (errorMessage) {
-    log('Коэфы сменились');
-    return false;
-  }
-  log('Неизвестная ошибка из checkStakeStatus()');
-  return false;
 }
