@@ -22,7 +22,7 @@ const jsFail = (message = ''): void => {
 };
 
 const showStake = async (): Promise<void> => {
-  const [a, b, selectionId, c] = worker.BetId.split('|');
+  const [, , selectionIdRaw] = worker.BetId.split('|');
 
   const betslipButton = document.querySelector(
     'button[data-test-id="betslip"]'
@@ -39,14 +39,24 @@ const showStake = async (): Promise<void> => {
   }
   updateBalance();
 
-  WH.messageBus.publish('betslip.leg.add', {
+  const selectionIdRegex = /(\d+)$/;
+  const selectionMatch = selectionIdRaw.match(selectionIdRegex);
+
+  if (!selectionMatch) {
+    jsFail('Не удалось сформировать selectionId. Обратитесь в ТП');
+    return;
+  }
+
+  const data = {
     handicapValue: 0.5,
     legSort: '--',
     priceDenominator: 1,
     priceNumerator: 1,
     priceType: 'L',
-    selectionId,
-  });
+    selectionId: selectionMatch[1],
+  };
+
+  WH.messageBus.publish('betslip.leg.add', data);
 
   const betAdded = await awaiter(() => getStakeCount() === 1);
   if (!betAdded) {
