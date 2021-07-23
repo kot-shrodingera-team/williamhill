@@ -3,7 +3,9 @@ import { log } from '@kot-shrodingera-team/germes-utils';
 import getStakeCount from './getStakeCount';
 
 const preCheck = (): boolean => {
-  const betLabel = document.querySelector('.bs-bet-label');
+  const betLabel = document.querySelector(
+    '.bs-bet-price__container .bs-bet-label'
+  );
   if (/Susp/i.test(betLabel.textContent.trim())) {
     log('Ставка недоступна (Suspended)', 'crimson');
     return false;

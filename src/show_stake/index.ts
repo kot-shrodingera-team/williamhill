@@ -65,6 +65,16 @@ const showStake = async (): Promise<void> => {
     return;
   }
   log('Ставка успешно открыта', 'green');
+
+  const coefficientElement = await getElement(
+    '.bs-bet-price__container .bs-bet-label'
+  );
+  if (!coefficientElement) {
+    log('Коэффициент не появился', 'red');
+    jsFail();
+    return;
+  }
+
   setBetAcceptMode();
   couponOpenning = false;
   worker.JSStop();
