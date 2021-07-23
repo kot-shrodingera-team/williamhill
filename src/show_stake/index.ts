@@ -39,6 +39,14 @@ const showStake = async (): Promise<void> => {
   }
   updateBalance();
 
+  const emptyBetslip = await getElement('[data-test-id="betslip"][disabled]');
+  if (!emptyBetslip) {
+    log('Купон не очистился', 'red');
+    jsFail();
+    return;
+  }
+  log('Купон очистился', 'steelblue');
+
   const selectionIdRegex = /(\d+)$/;
   const selectionMatch = selectionIdRaw.match(selectionIdRegex);
 
