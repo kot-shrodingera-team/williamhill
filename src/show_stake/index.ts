@@ -75,12 +75,14 @@ const showStake = async (): Promise<void> => {
     jsFail();
     return;
   }
+  log('Появился коэффициент', 'steelblue');
   const stakeInput = await getElement('input.bs-bet-stake__input');
   if (!stakeInput) {
     log('Поле ввода суммы ставки не появилось', 'red');
     jsFail();
     return;
   }
+  log('Появилось поле вввода суммы ставки', 'steelblue');
 
   setBetAcceptMode();
   couponOpenning = false;
