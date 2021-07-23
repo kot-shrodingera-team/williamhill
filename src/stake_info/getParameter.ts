@@ -18,11 +18,19 @@ const getParameter = (): number => {
     return -9999;
   }
   const selectionDescription = selectionDescriptionElement.textContent.trim();
+
   const totalMatch = selectionDescription.match(
     /(Over|Under)\s+(\d+(?:\.\d+)?)/i
   );
   if (totalMatch) {
     return Number(totalMatch[1]);
+  }
+
+  const gamesHandicapMatch = selectionDescription.match(
+    /\s+(\d+(?:\.\d+)?)\s+Games$/i
+  );
+  if (gamesHandicapMatch) {
+    return Number(gamesHandicapMatch[1]);
   }
   return -6666;
 };
