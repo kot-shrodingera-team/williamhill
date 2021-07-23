@@ -27,7 +27,7 @@ const getParameter = (): number => {
   }
 
   const gamesHandicapMatch = selectionDescription.match(
-    /\s+(\d+(?:\.\d+)?)\s+Games$/i
+    /\s+([+-]?\d+(?:\.\d+)?)\s+Games$/i
   );
   if (gamesHandicapMatch) {
     return Number(gamesHandicapMatch[1]);
