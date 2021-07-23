@@ -66,11 +66,18 @@ const showStake = async (): Promise<void> => {
   }
   log('Ставка успешно открыта', 'green');
 
+  // Иногда не успевают прогрузится коэффициент и поле ввода суммы ставки
   const coefficientElement = await getElement(
     '.bs-bet-price__container .bs-bet-label'
   );
   if (!coefficientElement) {
     log('Коэффициент не появился', 'red');
+    jsFail();
+    return;
+  }
+  const stakeInput = await getElement('input.bs-bet-stake__input');
+  if (!stakeInput) {
+    log('Поле ввода суммы ставки не появилось', 'red');
     jsFail();
     return;
   }
