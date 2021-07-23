@@ -15,6 +15,9 @@ interface WH {
 
 declare global {
   const WH: WH;
+  interface Window {
+    consoleCopy: Console;
+  }
 }
 
 export default {};

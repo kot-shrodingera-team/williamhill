@@ -10,6 +10,8 @@ import fastLoad from './fastLoad';
 import initialize from './initialization';
 import showStake from './show_stake';
 
+window.consoleCopy = { ...console };
+
 // Object.defineProperty(window, 'console', {
 //   writable: false,
 // });
