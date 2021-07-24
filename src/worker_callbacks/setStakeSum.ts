@@ -12,7 +12,7 @@ const clearStakeSum = async (): Promise<void> => {
     return;
   }
   inputElement.focus();
-  const keyFunction = Api.DomEventsHelper.KeyDown;
+  const keyFunction = worker.Api.DomEventsHelper.KeyDown;
 
   if (inputElement.value) {
     isClearingStakeSum = true;
