@@ -2,7 +2,8 @@ import getCoefficientGenerator from '@kot-shrodingera-team/germes-generators/sta
 
 const getCoefficient = getCoefficientGenerator({
   // coefficientSelector: '.betslip-selection__price',
-  coefficientSelector: '.bs-bet-price__selected',
+  // coefficientSelector: '.bs-bet-price__selected',
+  coefficientSelector: '.bs-bet-price--selected',
 });
 
 export default getCoefficient;
